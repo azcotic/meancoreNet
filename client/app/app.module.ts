@@ -30,6 +30,9 @@ import {
   SeoService
 } from '../features/utils';
 
+import { TestComponent } from './test/test.component';
+import { DataZService } from './data-z.service';
+
 export function init_app(appLoadService: AppLoadService) {
   return () => appLoadService.initializeApp();
 }
@@ -38,7 +41,8 @@ export function init_app(appLoadService: AppLoadService) {
   declarations: [
     AppComponent,
     UnauthorizedComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -51,6 +55,9 @@ export function init_app(appLoadService: AppLoadService) {
     AppHomeModule,
     AppFooterModule,
     AppUsersModule
+  ],
+  exports: [
+     TestComponent
   ],
   providers: [
     AppLoadService,
@@ -75,6 +82,7 @@ export function init_app(appLoadService: AppLoadService) {
     LoadingService,
     MessagingService,
     ScriptInjectorService,
+    DataZService,
     SeoService,
     {
       provide: '@env',
@@ -84,3 +92,4 @@ export function init_app(appLoadService: AppLoadService) {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

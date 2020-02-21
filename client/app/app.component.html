@@ -1,12 +1,19 @@
 <app-menu></app-menu>
 <main>
+	<div  class="container-fluid">
+		<div class="row justify-content-center">
+			<app-test></app-test>
+		</div>
+	</div>
   <router-outlet></router-outlet>
   <app-loading></app-loading>
-  <app-messaging></app-messaging>
+  <app-messaging>
+  	
+  </app-messaging>
 </main>
 <!--use this outlet for app specific footers-->
 <router-outlet name="appfooter"></router-outlet>
 <footer class="footer p-3 text-center">
-  <p>Powered By <a href="https://github.com/mrdav30/MEANcore">MEANcore</a></p>
-  <p>&copy; {{curYear}} - MEANcore Dev Team </p>
+  <p>Programado por Arturo Zambrano para <a href="http://www.netsoft-technology.com/">Netsoft Technology</a></p>
+  <p>&copy; {{curYear}} - AzPc Dev Team </p>
 </footer>

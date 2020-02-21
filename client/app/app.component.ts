@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { distinctUntilChanged } from 'rxjs/operators';
-
 import { environment } from '../environments/environment';
-
+import { SeoService } from '../features/utils';
 import { ScriptInjectorService } from '../features/utils';
 
 declare const gtag: (type: string, googleAnalyticsID: string, pageProperties: any) => void;
@@ -20,6 +19,7 @@ export class AppComponent implements OnInit {
 
   public constructor(
     private titleService: Title,
+    private seoService: SeoService,
     private router: Router,
     private scriptInjectorService: ScriptInjectorService
   ) {
@@ -29,6 +29,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.seoService.generateTags({
+            title: 'Netsoft Software Z'
+        });
     this.router.events.pipe(
       distinctUntilChanged((previous: any, current: any) => {
         // Subscribe to any `NavigationEnd` events where the url has changed

@@ -1,8 +1,9 @@
 'use strict';
-
+ 
 /**
  * Module dependencies.
  */
+
 var config = require('../config'),
   express = require('express'),
   morgan = require('morgan'),
@@ -23,6 +24,14 @@ var config = require('../config'),
   path = require('path'),
   _ = require('lodash'),
   vhost = require('vhost');
+const convert = require("../../scripts/DataZ.js");
+ 
+
+  //BASE DE DATOS
+
+ var MongoClient = require ('mongodb').MongoClient;
+ var mongourl = "mongodb://localhost/meancore-dev";
+
 
 /**
  * Configure the models
@@ -240,12 +249,177 @@ var initClientRoutes = function (app, config) {
     maxAge: '30d', // Cache node modules in development as well as they are not updated that frequently.
     index: false,
   }));
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+  function getDataZ() {
+    return Promise.resolve('Hacer Cosas');
+  }
+  function convertDataZ(data){
+    var dataZ = convert.toDataZ(data);
+    console.log("convirtiendo data");
+  }
+
+  function storeDataZ(){
+    console.log("guardando la data en mongo");
+  }
 
   // Setting the app router and static folder
   app.use('/', express.static(path.resolve(config.staticFiles), {
     maxAge: cacheTime,
-    index: false,
+    index: false, 
   }));
+
+
+var mysql      = require('mysql');
+var connectionMysql = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '',
+  database : 'zsoftwarenetsoft'
+});
+
+connectionMysql.connect(function (err){
+    if (err) throw err
+    console.log("Conexión activa con MySql");
+});
+
+
+  app.post('/DataZ/add', function(req, res) {
+    console.log("Recibido Post DataZ:");
+    console.log(req.body); 
+     try {
+        var j=req.body; //Asignar variable a puntero de MYSQL
+        var dataZ = convert.toDataZ(JSON.stringify(req.body)); //Convertir REQBODY
+        console.log("DataZ:",dataZ); //Imprimir data resultante
+        dataZ= convert.dataZToJson(dataZ) //Pasar a Json de nuevo
+        res.statusCode = 200; //Asignar codigo de respuesta
+        var json = {"msgType":"success","message":"Json Recibido de manera exitosa", "datos":""}
+        json.datos = dataZ;
+        //Meter los datos en un json para responder
+        var jIQ3= "INSERT INTO `datazs`(`IDDataZ`, `serial`,`date`, `num_repz`, `rif`, `alicuotas`, `desc_alicuotas`, `exnt`, `bi`, `nc_exento`, `nc_bi`, `des_exnt`, `des_bi`, `last_fact`, `last_doc_no_fi`, `last_nc`) VALUES ('','"+j.serial+"','"+j.date+"','"+j.num_repz+"','"+j.rif+"','"+j.alicuotas+"','"+j.desc_alicuotas+"','"+j.exnt+"','"+j.bi+"','"+j.nc_exento+"','"+j.nc_bi+"','"+j.des_exnt+"','"+j.des_bi+"','"+JSON.stringify(j.last_fact)+"','"+JSON.stringify(j.last_doc_no_fi)+"','"+JSON.stringify(j.last_nc)+"')";
+        //Se prepara el Query con los datos
+
+        connectionMysql.query(jIQ3, function (error, results, fields) {
+          if (error) throw error;
+
+          //console.log('The solution is: ', results[0].solution);
+        });
+        json.env = process.env;
+        res.write(JSON.stringify(json));
+        res.end();
+        //console.log("Proceso Exitoso");
+        //console.log("Devolver 200")
+    }
+    catch(err){
+      console.log("Error: Valor inválido");
+      res.statusCode = 200;
+      var jsonerror= {
+        "msgType":"error",
+        "message":"Error: Invalid value json for type dataZ",
+        "datos":"nulo"
+      };
+      //console.log(err);
+      res.write(JSON.stringify(jsonerror))
+      res.end();
+    }
+  });
+
+  app.post('/DataZ/DeleteAll', function(req, res) {
+    console.log("Voy a borrar la tabla de los Z");
+    //console.log(req.body); 
+     try {
+        var query2 = "TRUNCATE `datazs`";
+        connectionMysql.query(query2, function (error, results, fields) {
+          if (error) throw error;
+          //console.log('The solution is: ', results[0].solution);
+        });
+        var resjson= {
+        "msgType":"success",
+        "message":"Se borró la base de datos con éxito",
+        "datos":"nulo"
+      };
+        res.statusCode = 200; //Asignar codigo de respuesta
+        res.write(JSON.stringify(resjson));
+        res.end();
+        //console.log("Proceso Exitoso");
+        //console.log("Devolver 200")
+    }
+    catch(err){
+      console.log("Error: No se pudo Borrar:", err);
+      res.statusCode = 200;
+      var jsonerror= {
+        "msgType":"error",
+        "message":"Error:"+err+".",
+        "datos":"nulo"
+      };
+      //console.log(err);
+      res.write(JSON.stringify(jsonerror))
+      res.end();
+    }
+  });
+
+  app.post('/zServices', function(req, res) {
+           
+      res.setHeader('Content-Type', 'application/json');
+      try {
+
+        var dataZ = convert.toDataZ(JSON.stringify(req.body));
+        console.log("DataZ:",dataZ);
+        dataZ= convert.dataZToJson(dataZ)
+        res.statusCode = 200;
+        var json = {"msgType":"success","message":"Json Recibido de manera exitosa", "datos":""}
+        json.datos = dataZ;
+        json.env = process.env;
+        res.write(JSON.stringify(json));
+        res.end();
+        //console.log("Proceso Exitoso");
+        //console.log("Devolver 200")
+      }
+      catch(err){
+        //console.log("error");
+        res.statusCode = 200;
+        var jsonerror= {
+          "msgType":"error",
+          "message":"Error: Invalid value json for type dataZ",
+          "datos":"nulo"
+        };
+        //console.log(err);
+        res.write(JSON.stringify(jsonerror))
+        res.end();
+      }
+      //Cambiar formato
+      //Guardar Data  
+      //catch
+
+    });
+
+
+
+
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+
+
+
+  
 
   // Setting the app router and static folder for image paths
   let imageOptions = _.map(config.uploads.images.options),
@@ -261,6 +435,25 @@ var initClientRoutes = function (app, config) {
 /**
  * Configure the server routes
  */
+var responderSaludo = function(db, req, res){
+  //console.log(req.method);
+    console.log(req.body);
+    console.log(req.url);
+    //console.log(req.headers)
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json');
+    // Note: the 2 lines above could be replaced with this next one:
+    //res.writeHead(200, {'Content-Type': 'application/json'})
+    //console.log(req.body);
+    res.write(JSON.stringify(req.body));
+    res.end();
+    var saludo = "Hola";
+
+    //db.collection("users").find();
+    //res.write(JSON.stringify(saludo));
+    
+    
+}
 var initServerRoutes = function (app, config) {
   // Globbing routing files
   config.files.server.routes.forEach(function (routePath) {
@@ -300,7 +493,7 @@ var configureSocketIO = function (app, db) {
 
 var enableCORS = function (app) {
   app.use(function (req, res, next) {
-    //res.header('Access-Control-Allow-Headers', 'content-type,devicetoken,usertoken');
+    res.header('Access-Control-Allow-Headers', 'content-type,devicetoken,usertoken');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
     res.header('Access-Control-Allow-Origin', '*');
@@ -357,7 +550,7 @@ var init = function (config, db) {
   // Initialize error routes
   initErrorRoutes(app, config);
 
-  console.log('Loading Completed for: ' + config.app.name);
+  console.log('Loading Completed for:' + config.app.name);
   return app;
 };
 
@@ -387,10 +580,10 @@ var initApps = function (db) {
 
   return rootApp;
 };
-
 module.exports.initAllApps = function (db, callback) {
+
   var rootApp = initApps(db);
-  if (callback) {
+  if (callback) { 
     callback(rootApp);
   }
 };

@@ -53,4 +53,12 @@ export abstract class AbstractRestService {
                 catchError(this.handleErrorService.handleError())
             );
     }
+    GetData(): Observable<{}> {
+        return this.http.post(this.appBaseUrl + this.apiBaseUrl + this.actionUrl + '/data', function (req, res) {
+        res.send(req.body)
+      })
+        .pipe(
+               catchError(this.handleErrorService.handleError())
+        );
+    }
 }

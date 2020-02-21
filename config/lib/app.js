@@ -8,6 +8,14 @@ var config = require('../config'),
   express = require('./express'),
   chalk = require('chalk');
 
+ function arturodb(db) {
+  console.log("Conexión exitosa de arturodb");
+  //Consultas a la BD
+  //console.log(db.connect());
+  //mongoose.disconnect();
+   return new Promise(function (resolve, reject) {})
+ }; 
+
 module.exports.init = function init(callback) {
   mongoose.connect(function (db) {
     express.initAllApps(db, function (app) {
@@ -20,9 +28,45 @@ module.exports.start = function start(callback) {
   var _this = this;
 
   _this.init(function (app, config) {
+    //Conexión MONGODB
+  mongoose.connect(async () => {
+    mongoose.loadModels();
+      //console.log("apunto de conectarme");
+      
+
+
+      arturodb(mongoose)
+        .then(function () {
+          // Disconnect and finish task
+          mongoose.disconnect((disconnectError) => {
+            if (disconnectError) {
+              console.log('Error disconnecting from the database.HOLA');
+              // Finish task with error
+              console.error(disconnectError);
+            }
+          });
+        })
+        .catch((err) => {
+          mongoose.disconnect((disconnectError) => {
+            if (disconnectError) {
+              console.log('HOLAError disconnecting from the database, but was preceded by a Mongo Seed error.');
+            }
+
+            // Finish task with error
+            console.error(err);
+          });
+        });
+   });
+
+
+
 
     // Start the app by listening on <port> at <host>
-    var server = app.listen(config.port, config.host, function () {
+    var server = app
+    
+
+
+    .listen(config.port, config.host, function () {
 
       process.stdin.resume(); //so the program will not close instantly
 
@@ -65,10 +109,15 @@ module.exports.start = function start(callback) {
       console.log(chalk.green('Server:          ' + server));
       console.log(chalk.green('Database:        ' + config.mongoDB.uri));
       console.log(chalk.green('App version:     ' + config.meancore.version));
+      console.log(chalk.green('Todo listo Arturo, ¡Vamos a darle en las costillas!'));
       console.log('--');
 
       if (callback) callback(app, config);
     });
+    
+
+   
+    
     server.timeout = 10 * 60 * 1000; // 10 mins
   });
 };

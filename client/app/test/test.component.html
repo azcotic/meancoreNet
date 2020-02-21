@@ -1,0 +1,21 @@
+<!-- <p>Componente de Prueba para mostrar la data Z</p>
+<p>Pedir la data Z</p> -->
+<div class="col">
+		<button class="btn btn-primary" (click)="callServer()">
+			Prueba Recepción Data Z
+		</button>		
+		<button class="btn btn-success" (click)="SaveBD()">
+			Guardar en BD
+		</button>	
+		<button class="btn btn-danger" (click)="DeleteAllJson()">
+			Borrar Data en BD (toda)
+		</button>
+</div>
+<div class="col-12">
+	<pre>{{jsonData | json}}</pre>
+</div>
+
+
+		
+	
+	<!-- <button class="btn" (click)="callConsoles()">Soy un botón que escribe en consola</button> -->
