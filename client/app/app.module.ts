@@ -32,17 +32,22 @@ import {
 
 import { TestComponent } from './test/test.component';
 import { DataZService } from './data-z.service';
+import { ZcardComponent } from './zcard/zcard.component';
+import { PrinterListComponent } from './printer-list/printer-list.component';
+import { DatazDetailsComponent } from './dataz-details/dataz-details.component';
+import { registerLocaleData } from '@angular/common';
+import localeVe from '@angular/common/locales/es-VE';
 
 export function init_app(appLoadService: AppLoadService) {
   return () => appLoadService.initializeApp();
 }
-
+registerLocaleData(localeVe, 'es-VE');
 @NgModule({
   declarations: [
     AppComponent,
     UnauthorizedComponent,
     PageNotFoundComponent,
-    TestComponent
+    TestComponent,
   ],
   imports: [
     BrowserModule,

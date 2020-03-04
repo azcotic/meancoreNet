@@ -1,15 +1,32 @@
 <div class="container p-3">
   <div *ngIf="!isLoggedIn">
-    <div class="card">
-      <div class="card-title">
-        <h3>Servidor Corriendo</h3>
+    <div class="card text-center">
+      <div  class="card-title">
+        <h3>Recolección de reporte Z | <a class="navbar-brand" routerLink="{{appDefaultRoute}}"><span style="color:red">Net</span><span style="color:blue">Soft</span></a></h3>
       </div>
-      <div class="card-body">Mensaje de Prueba.</div>
+      <div class="card-body">Por favor, inicia sesión.</div>
     </div>
   </div>
   <div *ngIf="isLoggedIn">
-    <div class="card">
-      <div class="card-body">¡Felicidades estás logeado</div>
+    <div class="card text-center">
+      <div  class="card-title">
+        <h3>¡Felicidades estás logeado, {{authService.user.username}}!</h3>
+      </div>
+      <div class="card-body">
+        <img class="img-fluid mr-2" src="{{logo}}" />
+        <br>
+        <a routerLink="/printers" rel="nofollow"><div class="btn btn-primary">Ver las Impresoras</div></a>
+      </div>
     </div>
   </div>
 </div>
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <app-zcard></app-zcard>
+    </div>
+    <div class="col-md-6">
+      <app-dataz-details *ngIf="dz.detailedDataZ"  ></app-dataz-details>
+    </div>
+  </div>
+</div> -->

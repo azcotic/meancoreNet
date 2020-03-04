@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="row justify-content-center">
+		<div  class="col text-center">
+			<h3>{{"Tus Impresoras" | uppercase}}</h3>
+		</div>
+		
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row zcard">
+		<div class="" *ngIf="dz.dataprinters">
+			<div *ngFor="let printer of dz.dataprinters" class="card" style="width: 18rem;">
+				<img class="card-img-top" src="{{'assets/images/models/0001.png'}}" alt="Card image cap">
+				<div class="card-body">
+					  <div class="numberCircle">{{printer.IDImpresora | number:'2.0':'es-VE'}}</div>
+					<h5 class="card-title">{{printer.Serial}}</h5>
+					<p class="card-text">Esto es una pequeña descripción que puede colocar el cliente de la impresora, preferiblemente dónde está ubicada.</p>
+					<a routerLink="/zcards/{{printer.Serial}}" class=" card-link btn btn-primary">Reportes</a>
+					<!-- <a [routerLink]="['/zcards', printer.Serial, {serial: printer.Serial}]" class=" card-link btn btn-primary">Reportes</a> -->
+				</div>
+			</div>
+			<!-- Viejo Código de la Card de la Impresora -->
+			<!-- <div *ngFor="let printer of dz.dataprinters" class="card col-md-3">
+				<div class="card-body">
+					<h5 class="card-title">Impresora N° {{printer.IDImpresora}}</h5>
+					<h6 class="card-subtitle mb-2 text-muted"> ({{printer.IDCliente}})</h6>
+					<p class="card-text">Información más importante de la printer {{printer.Serial}}</p>
+					<a routerLink="/zcards" class="card-link">Ver DatasZ</a>
+					 <a class="card-link">{{printer.RifImpresora}}</a>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>

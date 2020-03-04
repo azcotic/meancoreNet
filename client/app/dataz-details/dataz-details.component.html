@@ -1,0 +1,296 @@
+<div class="card">
+	<!-- 	<button class="btn btn-primary">Cambiar estilo</button> -->
+	<div class="card-title">
+		<h3>Reporte N° {{this.dz.detailedDataZ.num_repz}}</h3>
+	</div>
+	<div class="card-body" style="overflow: auto; height: 50vh;">
+		<div class="container receipt">
+			<div class="row justify-content-center ">
+				<div class="col-6 linea">
+					<p>SENIAT</p>
+					<p>{{this.jsonDataZ.nombre}}</p>
+					<p>{{this.dz.detailedDataZ.rif}}</p>
+					<p>{{this.jsonDataZ.dir}}</p>
+					<p>{{this.jsonDataZ.dir2}}</p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<div class="col-4 linea">
+					<p>Fecha: {{this.dz.detailedDataZ.date | date: 'dd-MM-yyyy'}}</p>
+					<p>Reporte Z #:</p>
+					
+				</div>
+				<div class="col-4 final linea">
+					<p>Hora: {{this.dz.detailedDataZ.date | date: 'mm:ss'}}</p>
+					<p>{{this.dz.detailedDataZ.num_repz}}</p>
+				</div>
+			</div>
+			<div class="row justify-content-between">
+				<p>-------------------------------------------------------------------------------------------</p>
+			</div>
+			<span class="lista">
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<p>Exento</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(this.dz.detailedDataZ.exnt) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as j">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-4 linea">
+							<p>BI {{this.dz.detailedDataZ.desc_alicuotas[j]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-4 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.bi[j]) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as k">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-4 linea">
+							<p>IVA {{this.dz.detailedDataZ.desc_alicuotas[k]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-4 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.bi[k]/100*dataZdetail) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>Total IVA</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalIVA("ventas")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>Total Ventas</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalVentas("ventas"))+p(totalIVA("ventas")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<p>N.C Exento</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(this.dz.detailedDataZ.nc_exento) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as j">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-4 linea">
+							<p>N.C BI {{this.dz.detailedDataZ.desc_alicuotas[j]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-4 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.nc_bi[j]) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as k">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-4 linea">
+							<p>N.C IVA {{this.dz.detailedDataZ.desc_alicuotas[k]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-4 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.nc_bi[k]/100*dataZdetail) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>N.C Total IVA</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalIVA("nc")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>N.C. Total</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalVentas("nc"))+p(totalIVA("nc")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<p>Descuento Exento</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(this.dz.detailedDataZ.des_exnt) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as j">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-4 linea">
+							<p>Descuento BI {{this.dz.detailedDataZ.desc_alicuotas[j]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-4 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.des_bi[j]) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div *ngFor="let dataZdetail of this.dz.detailedDataZ.alicuotas; index as k">
+					<div  *ngIf="dataZdetail!=0" class="row justify-content-between">
+						<div class="col-5 linea">
+							<p>Descuento IVA {{this.dz.detailedDataZ.desc_alicuotas[k]}} {{dataZdetail}},00%</p>
+						</div>
+						<div class="col-5 final linea">
+							<p>{{md}}{{p(this.dz.detailedDataZ.des_bi[k]/100*dataZdetail) | number:'1.2-2':'es-VE'}}</p>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>Descuento Total IVA</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalIVA("desc")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-4 linea">
+						<b><p>Descuento Total</p></b>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(totalVentas("desc"))+p(totalIVA("desc")) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-6 linea">
+						<p>Documentos no Fiscales Emitidos</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.doc_no_fi_emit_num ==undefined ? this.dz.detailedDataZ.last_doc_no_fi_num  : this.dz.detailedDataZ.doc_no_fi_emit_num}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Notas de Credito Emitidas</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.nc_emit_num ==undefined ? this.dz.detailedDataZ.last_nc_num  : this.dz.detailedDataZ.nc_emit_num}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Facturas Emitidas</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.fact_emit_num ==undefined ? this.dz.detailedDataZ.last_fact_num  : this.dz.detailedDataZ.fact_emit_num}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Ultima factura #</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_fact_num }}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Fecha Ultima Factura</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_fact_date | date: 'dd-MM-yyyy'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Hora Ultima Factura</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_fact_date | date: 'mm:ss'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-6 linea">
+						<p>Ultimo Documento No Fiscal #</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_doc_no_fi_num}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-6 linea">
+						<p>Fecha Ultimo Documento No Fiscal</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_doc_no_fi_date | date: 'dd-MM-yyyy'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-6 linea">
+						<p>Hora Ultimo Documento No Fiscal</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_doc_no_fi_date | date: 'mm:ss'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Ultima N.C #</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_nc_num }}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Fecha Ultima N.C</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_nc_date | date: 'dd-MM-yyyy'}}</p>
+					</div>
+				</div>
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Hora Ultima N.C</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.last_nc_date | date: 'mm:ss'}}</p>
+					</div>
+				</div>
+				<!--  <div class="row justify-content-between">
+					<div class="col-5 linea">
+						<p>Ultimo Reporte Z Enviado #</p>
+					</div>
+					<div class="col-4 final linea">
+						<p>{{md}}{{p(this.dz.detailedDataZ.exnt) | number:'1.2-2':'es-VE'}}</p>
+					</div>
+				</div> -->
+				
+				
+				<!-- <div class="row justify-content-start">
+					<div class="col-4">
+						One of three columns
+					</div>
+				</div>
+				<div class="row justify-content-end">
+					<div class="col-4">
+						One of three columns
+					</div>
+				</div> -->
+			</span>
+			<div class="row justify-content-between">
+					<p>-------------------------------------------------------------------------------------------</p>
+				</div>
+			<span class="lista">
+				<div class="row justify-content-between">
+					<div class="col-5 linea">
+						
+					</div>
+					<div class="col-4 final linea">
+						<p>{{this.dz.detailedDataZ.serial}}</p>
+					</div>
+				</div>
+			</span>
+		</div>
+	</div>
+</div>

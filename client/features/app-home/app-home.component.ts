@@ -11,15 +11,18 @@ import { DataZService } from '../../app/data-z.service';
 })
 export class AppHomeComponent implements OnInit {
     isLoggedIn = false;
+    logo: string = "assets/images/logo_nuevo.jpg"; 
 
     constructor(
         public authService: AuthService,
-        public router: Router
+        public router: Router,
+        public dz: DataZService
     ) { }
 
     ngOnInit() {
         if (this.authService.user) {
             this.isLoggedIn = this.authService.user ? true : false;
+            //console.log(this.authService.user);
         }
     }
 }

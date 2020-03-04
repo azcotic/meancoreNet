@@ -26,6 +26,8 @@ import {
   PageNotFoundComponent
 } from '../features/utils/page-not-found/page-not-found.component';
 
+
+
 export const AppRoutes: Routes = [
   ...AppHomeRoutes,
   ...AppFooterRoutes,

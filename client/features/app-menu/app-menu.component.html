@@ -32,15 +32,15 @@
         </form>
       </li>
       <li *ngIf="!currentUser && showLoginNav" class="nav-item">
-        <a routerLink="/sign-in" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark mr-2">Login</a>
-        <a routerLink="/sign-up" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark">Get Started</a>
+        <a routerLink="/sign-in" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark mr-2">Ingresa</a>
+        <a routerLink="/sign-up" routerLinkActive="btn-secondary" rel="nofollow" class="btn btn-outline-dark">Registro</a>
       </li>
       <li *ngIf="currentUser" class="nav-item">
         <a routerLink="/profile" rel="nofollow" class="btn mr-2 user-avatar">         
           <img [(src)]="currentUserAvatar" *ngIf="currentUserAvatar">
           <i class="mr-2 icon-user" *ngIf="!currentUserAvatar"></i>
         </a>
-        <button type="button" (click)="logout()" class="btn btn-outline-dark">Logout</button>
+        <button type="button" (click)="logout()" class="btn btn-outline-dark">Salir</button>
       </li>
     </ul>
   </div>

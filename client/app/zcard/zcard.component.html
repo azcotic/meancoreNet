@@ -1,0 +1,31 @@
+<div class="container">
+	<div class="row justify-content-center">
+		<div  class="col text-center">
+			<h3>{{"Reportes Z de la impresora: " | uppercase}}{{this.serial.serial}}</h3>
+			<p>Por favor, seleccione un Reporte para ver el detalle.</p>
+		</div>
+		
+	</div>
+</div>
+<div class="container-fluid">	
+	<div class="row zcard">
+		<div class="col-md-6">
+			<div class="" *ngIf="dz.dataZFromUser3">
+				<div *ngFor="let dataZ of dz.dataZFromUser3; index as i" class="card col-md-4">
+				  <div class="card-body">
+				    <h5 class="card-title">N° {{dataZ.num_repz | number:'2.0'}}</h5>
+				    <h6 class="card-subtitle mb-2 text-muted"> ({{dataZ.date | date: 'dd-MM-yyyy'}})</h6>
+				    <p class="card-text">Información más importante de la DataZ</p>
+				    <a (click)="getDetails(i)" class="card-link">
+				    	<button class="btn btn-outline-primary">Detalle</button>
+				    </a>
+<!-- 				    <a class="card-link">{{i}}</a> -->
+				  </div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<app-dataz-details *ngIf="dz.detailedDataZ"  ></app-dataz-details>
+		</div>
+	</div>
+</div>

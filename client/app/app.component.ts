@@ -5,6 +5,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { SeoService } from '../features/utils';
 import { ScriptInjectorService } from '../features/utils';
+import { AuthService } from '../features/utils';
 
 declare const gtag: (type: string, googleAnalyticsID: string, pageProperties: any) => void;
 
@@ -16,12 +17,15 @@ declare const gtag: (type: string, googleAnalyticsID: string, pageProperties: an
 
 export class AppComponent implements OnInit {
   curYear: number = new Date().getFullYear();
+  isLoggedIn = false;
+
 
   public constructor(
     private titleService: Title,
     private seoService: SeoService,
     private router: Router,
-    private scriptInjectorService: ScriptInjectorService
+    private scriptInjectorService: ScriptInjectorService,
+
   ) {
     this.scriptInjectorService.load('gtag').catch(error => {
       console.log(error);
@@ -29,6 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.seoService.generateTags({
             title: 'Netsoft Software Z'
         });

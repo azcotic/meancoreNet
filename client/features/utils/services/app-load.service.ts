@@ -20,7 +20,9 @@ export class AppLoadService {
             .then((data: any) => {
                 if (data) {
                     // set user stored in server session
+
                     this.configService.user = data.user ? data.user : null;
+                    console.log(data.user);
                     this.configService.config = data.config ? data.config : null;
                 }
             });
