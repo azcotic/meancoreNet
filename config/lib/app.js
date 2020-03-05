@@ -10,9 +10,6 @@ var config = require('../config'),
 
  function arturodb(db) {
   console.log("Conexión exitosa de arturodb");
-  //Consultas a la BD
-  //console.log(db.connect());
-  //mongoose.disconnect();
    return new Promise(function (resolve, reject) {})
  }; 
 

@@ -30,7 +30,16 @@ const convert = require("../../scripts/DataZ.js");
 //BASE DE DATOS
 
 var MongoClient = require('mongodb').MongoClient;
+var mongourl = "";
+/*if(process.env.PRODUCTION==true){
+  mongourl = process.env.MONGODB_URI;
+
+} else {
+  mongourl = process.env.MONGODB_URI2;
+}
+console.log(mongourl)*/
 var mongourl = "mongodb://localhost/meancore-dev";
+//
 
 
 /**
